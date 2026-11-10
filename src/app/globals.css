@@ -27,11 +27,16 @@ button, a, select { touch-action: manipulation; }
 .site-shell { width: min(1120px, 100%); min-height: 100svh; padding: 67px 36px 32px; margin: 0 auto; display: flex; flex-direction: column; }
 .skip-link { position: fixed; z-index: 10; top: 12px; left: 12px; padding: 12px 20px; color: #0d0f14; background: #f4f4f5; border-radius: 8px; transform: translateY(-160%); }
 .skip-link:focus { transform: translateY(0); }
-.site-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 35px; border-bottom: 1px solid #2a2d38; }
-.brand { display: flex; align-items: center; gap: 17px; min-width: 0; }
+.site-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 35px; border-bottom: 1px solid #2a2d38; }
+.brand { display: flex; flex: 1 1 380px; align-items: center; gap: 17px; min-width: 0; }
 .brand-mark { width: 49px; height: 49px; flex-shrink: 0; color: #f4f4f5; display: grid; place-items: center; background: #f4f4f50c; border: 1px solid #f4f4f529; border-radius: 13px; }
 .brand h1 { margin: 0; font-size: 27px; line-height: 1.2; letter-spacing: -.9px; font-weight: 650; }
 .brand p { color: #9499a8; font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+.header-links { display: flex; flex-shrink: 0; align-items: center; gap: 8px; margin-left: auto; }
+.header-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 10px 13px; border: 1px solid #2a2d38; border-radius: 8px; background: #171a22; color: #f4f4f5; font-size: 12px; line-height: 1.4; white-space: nowrap; transition: background .15s, border-color .15s; }
+.header-link svg { flex-shrink: 0; }
+.header-link:hover, .header-link:focus-visible { background: #222633; border-color: #f4f4f566; }
+.header-link:active { background: #2b2d35; }
 main { flex: 1; min-width: 0; }
 main:focus { outline: none; }
 .catalog { padding-top: 32px; }
@@ -124,6 +129,8 @@ main:focus { outline: none; }
   .brand-mark svg { width: 23px; }
   .brand h1 { font-size: 23px; letter-spacing: -.65px; }
   .brand p { font-size: 11px; max-width: 252px; margin-top: 6px; }
+  .header-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .header-link { min-width: 0; min-height: 44px; padding: 10px; font-size: 11.5px; white-space: normal; }
   .catalog { padding-top: 24px; }
   .toolbar { gap: 10px; }
   .search-field { height: 46px; }
