@@ -8,12 +8,14 @@ export function CatalogRow({ item }: { item: CatalogItem }) {
   const content = (
     <>
       <CatalogPoster url={item.posterUrl} />
-      <span className="record-title">{item.title}<span className="sr-only">, {item.type === "movie" ? "фильм" : "сериал"}</span></span>
-      <span className="record-meta">
-        {item.year !== null && <span>{item.year}<span className="sr-only"> год</span></span>}
-        {item.year !== null && item.season !== null && <span className="meta-dot" aria-hidden="true">·</span>}
-        {item.season !== null && <span className="season-label">{seasonLabel(item.season)}</span>}
-        {item.year === null && item.season === null && <span aria-label="Год не указан">—</span>}
+      <span className="record-details">
+        <span className="record-title">{item.title}<span className="sr-only">, {item.type === "movie" ? "фильм" : "сериал"}</span></span>
+        <span className="record-meta">
+          {item.year !== null && <span>{item.year}<span className="sr-only"> год</span></span>}
+          {item.year !== null && item.season !== null && <span className="meta-dot" aria-hidden="true">·</span>}
+          {item.season !== null && <span className="season-label">{seasonLabel(item.season)}</span>}
+          {item.year === null && item.season === null && <span aria-label="Год не указан">—</span>}
+        </span>
       </span>
       <span className="record-action" aria-hidden="true">
         {url ? <ArrowUpRight size={18} strokeWidth={1.6} /> : <Minus size={15} />}

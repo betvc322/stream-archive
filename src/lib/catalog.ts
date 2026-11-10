@@ -1,6 +1,6 @@
 export type MediaType = "movie" | "series";
 export type Category = "all" | MediaType;
-export type SortOrder = "source" | "title-asc";
+export type SortOrder = "title-asc" | "year-asc" | "year-desc";
 
 export interface CatalogItem {
   id: string;
@@ -113,11 +113,13 @@ const collator = new Intl.Collator("ru", { sensitivity: "base", numeric: true })
 
 export function sortCatalog(items: readonly CatalogItem[], order: SortOrder): CatalogItem[] {
   return [...items].sort((a, b) => {
-    if (order === "source") {
-      // Строка за строкой, сначала A (фильм), затем B (сериал).
-      return a.sourceRow - b.sourceRow || (a.type === b.type ? 0 : a.type === "movie" ? -1 : 1);
-    }
-    return collator.compare(a.title, b.title);
+    const titleOrder = collator.compare(a.title, b.title);
+    if (order === "title-asc") return titleOrder;
+    // Номер сезона не заменяет год. Неизвестный год всегда в конце.
+    if (a.year === null) return b.year === null ? titleOrder : 1;
+    if (b.year === null) return -1;
+    const yearOrder = order === "year-asc" ? a.year - b.year : b.year - a.year;
+    return yearOrder || titleOrder;
   });
 }
 

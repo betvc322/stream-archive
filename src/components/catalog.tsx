@@ -14,8 +14,9 @@ const filters: { value: Category; label: string }[] = [
 ];
 
 const sortOptions: { value: SortOrder; label: string }[] = [
-  { value: "source", label: "По порядку" },
   { value: "title-asc", label: "По алфавиту" },
+  { value: "year-asc", label: "Сначала старые" },
+  { value: "year-desc", label: "Сначала новые" },
 ];
 
 export function Catalog() {
@@ -80,7 +81,7 @@ export function Catalog() {
 
         <div className="sort-field">
           <ArrowDownWideNarrow size={16} strokeWidth={1.7} aria-hidden="true" />
-          <label htmlFor="catalog-sort" className="sr-only">Сортировка записей</label>
+          <label htmlFor="catalog-sort" className="sr-only">Сортировка по алфавиту или году выпуска</label>
           <select id="catalog-sort" value={sort} onChange={(event) => setSort(event.target.value as SortOrder)}>
             {sortOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
@@ -103,7 +104,7 @@ export function Catalog() {
       </div>}
 
       <div id="catalog-results" className="catalog-results" aria-busy={loading || deferredQuery !== query}>
-        <div className="list-heading" aria-hidden="true"><span>Название</span><span>Год / сезон</span><span className="heading-link">Запись</span></div>
+        <div className="list-heading" aria-hidden="true"><span>Название</span><span className="heading-link">Запись</span></div>
         {loading ? <CatalogLoading /> : !data ? <CatalogError onRetry={() => void reload()} busy={isRefreshing} /> : visible.length === 0 ? (
           <CatalogEmpty isCatalogEmpty={data.items.length === 0} onReset={reset} />
         ) : (

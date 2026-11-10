@@ -23,10 +23,24 @@ test("поиск и фильтр применяются одновременно
   assert.equal(filterCatalog(index, "несуществующая запись", "all").length, 0);
 });
 
-test("порядок таблицы: строка, затем A перед B; исходный массив не меняется", () => {
+test("сортировка не меняет исходный массив", () => {
   const reversed = [...items].reverse();
-  assert.deepEqual(sortCatalog(reversed, "source").map((item) => item.id), ["film-2", "series-2", "film-3"]);
+  const originalIds = reversed.map((item) => item.id);
+  sortCatalog(reversed, "year-desc");
+  assert.deepEqual(reversed.map((item) => item.id), originalIds);
   assert.equal(reversed[0].id, "film-3");
+});
+
+test("по году: в обоих направлениях неизвестный год и номер сезона не смешиваются с годами", () => {
+  assert.deepEqual(sortCatalog(items, "year-asc").map((item) => item.year), [2017, 2026, null]);
+  assert.deepEqual(sortCatalog(items, "year-desc").map((item) => item.year), [2026, 2017, null]);
+  assert.equal(sortCatalog(items, "year-asc").at(-1)?.season, 2);
+});
+
+test("записи одного года и записи без года упорядочиваются по алфавиту", () => {
+  const sameYear = [base, { ...base, id: "film-3", title: "Аватар" }];
+  assert.deepEqual(sortCatalog(sameYear, "year-desc").map((item) => item.title), ["Аватар", "Вышка 2"]);
+  assert.deepEqual(sortCatalog(sameYear.map((item) => ({ ...item, year: null })), "year-asc").map((item) => item.title), ["Аватар", "Вышка 2"]);
 });
 
 test("сортировка по алфавиту с русскими названиями", () => {
